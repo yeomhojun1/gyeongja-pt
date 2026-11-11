@@ -108,7 +108,7 @@ export const DEMO_QA = [
 ];
 
 export const DEMO_UNKNOWN =
-  '데모 모드에서는 예시 질문만 답할 수 있습니다.\n아래 예시 질문 중 하나를 눌러 보세요.';
+  '지금은 미리 준비한 예시 질문만 답할 수 있습니다.\n아래 예시 질문 중 하나를 눌러 보세요.';
 
 const normalize = (s) => s.toLowerCase().replace(/[\s?？.!,()（）·]/g, '');
 

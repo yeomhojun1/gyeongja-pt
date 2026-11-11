@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { API, DEMO } from '../config';
+import { API, NO_AI } from '../config';
 import { COMPARE_TOPICS } from '../content/compare';
 import Loading from '../components/Loading';
 
@@ -73,7 +73,7 @@ export default function Compare() {
       <p className="muted">참고 자료 종류: {topic.sources.join(', ')} (개별 원문과 문장 단위로 대조하지는 않았습니다)</p>
 
       <div className="free-topic">
-        <label htmlFor="free-topic">다른 주제로 비교해 보기{DEMO ? ' (데모에서는 위 4개 주제만)' : ''}</label>
+        <label htmlFor="free-topic">다른 주제로 비교해 보기{NO_AI ? ' (지금은 위 4개 주제만)' : ''}</label>
         <div className="input-row">
           <input id="free-topic" type="text" value={freeTopic} onChange={(e) => setFreeTopic(e.target.value)} placeholder="예: 법인세 인하" maxLength={100} />
           <button className="submit-btn" onClick={ask} disabled={loading || !freeTopic.trim()}>비교</button>

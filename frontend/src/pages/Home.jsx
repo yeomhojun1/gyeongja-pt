@@ -5,13 +5,14 @@ import { signedWon } from '../lib/loan';
 import { buildLedger } from '../lib/ledger';
 import { isEmptyProfile } from '../lib/profile';
 import { useProfile } from '../lib/useProfile';
+import { NO_AI } from '../config';
 import { calcFreedom, freedomInputs, periodText, validateFreedom } from '../lib/freedom';
 
 const tools = [
   { path: '/benefits', name: '받을 수 있는 돈 찾기', desc: '정부24 지원금·감면 중 내 조건에 맞는 것' },
   { path: '/calc', name: '대출 계산기', desc: '금리가 ±0.25·0.5·1%p 바뀌면 내 이자는?' },
   { path: '/chat', name: '경제 챗봇', desc: '경제 용어·현상을 쉬운 말로' },
-  { path: '/news', name: '뉴스 해설', desc: '기사를 붙여 넣으면 무슨 일인지 정리' },
+  { path: '/news', name: '뉴스 해설', desc: '기사를 붙여 넣으면 무슨 일인지 정리', ai: true },
   { path: '/compare', name: '시각 비교', desc: '견해가 갈리는 주제를 나란히' }
 ];
 
@@ -70,7 +71,7 @@ export default function Home() {
 
       <h2 className="feed-title">도구</h2>
       <div className="feature-grid">
-        {tools.map(f => (
+        {tools.filter(f => !(NO_AI && f.ai)).map(f => (
           <Link key={f.path} to={f.path} className="feature-card">
             <div className="feature-name">{f.name}</div>
             <div className="feature-desc">{f.desc}</div>

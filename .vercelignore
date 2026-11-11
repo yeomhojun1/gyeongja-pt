@@ -1,1 +1,7 @@
 backend
+# 아래는 Vercel CLI 로 직접 올릴 때를 대비한 것(평소엔 GitHub 연결로 배포)
+HANDOFF-*.md
+frontend/public/benefits.json
+node_modules
+frontend/dist
+.env

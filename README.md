@@ -59,6 +59,8 @@
 
 실서비스 방식의 AI 기능(챗봇·뉴스 해설·다른 주제 비교)은 코드로 구현돼 있지만, **사용료 문제로 실제 AI를 불러 답변 품질을 확인하지는 않았습니다.** 자동 테스트에서는 AI 응답을 가짜로 바꿔 서버 동작만 확인했습니다.
 
+**지금 배포(Vercel)는 AI 서버 없이 운영합니다.** 배포 빌드에 `VITE_API_URL`(AI 서버 주소)을 넣지 않으면 데모와 같은 미리 준비한 답변으로 동작하고(챗봇은 예시 질문 8개, 시각 비교는 4개 주제), 뉴스 해설은 메뉴에서 빠집니다. 나머지 기능은 처음부터 AI 를 쓰지 않습니다.
+
 데모에서 챗봇이 답할 수 있는 질문은 다음 8개입니다. 질문을 똑같이 쓰지 않아도 "주담대", "환율"처럼 핵심 단어가 들어 있으면 해당 답을 찾습니다.
 
 1. 기준금리가 오르면 내 대출은?
@@ -224,9 +226,13 @@ npm run sync:benefits                      # → frontend/public/benefits.json (
 
 > 경자피티의 계산과 해설은 참고용이며 투자·금융 상품 권유가 아닙니다.
 
+### 배포 (Vercel)
+
+Vercel 프로젝트 `gyeongja-pt`(GitHub 저장소 연결)가 `main` 에 push 할 때마다 루트 `vercel.json` 대로 `frontend` 를 빌드해 배포합니다. Vercel 환경 변수 `DATA_GO_KR_KEY` 가 있으면 빌드 직전에 혜택 데이터를 받습니다. `VITE_API_URL` 은 넣지 않습니다(AI 서버 없음).
+
 ### 데모 빌드 (GitHub Pages)
 
-`VITE_DEMO=true` 로 빌드하면 백엔드·AI 없이 브라우저 안의 가짜 API(`frontend/src/demo/`)로 동작합니다. 라우터는 HashRouter, 경로는 `/gyeongja-pt/` 로 바뀝니다. 평소 빌드에는 데모 답변이 들어가지 않습니다.
+`VITE_DEMO=true` 로 빌드하면 백엔드·AI 없이 브라우저 안의 가짜 API(`frontend/src/demo/`)로 동작합니다. 라우터는 HashRouter, 경로는 `/gyeongja-pt/` 로 바뀝니다. AI 서버 없는 배포 빌드에도 데모 답변이 들어갑니다(위 설명).
 
 ```bash
 cd frontend

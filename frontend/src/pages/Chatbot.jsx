@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { API, DEMO } from '../config';
+import { API, NO_AI } from '../config';
 import { DEMO_QA } from '../demo/answers';
 
 const GREETING = {
   role: 'assistant',
   content: '안녕하세요! 경자피티입니다.\n경제 용어나 뉴스에서 본 현상을 물어보시면 ① 한 줄 요약 ② 쉬운 설명 ③ 내 지갑 영향 ④ 출처 순서로 답해 드려요.\n특정 종목·코인·부동산을 사고팔지는 답하지 않습니다.',
   local: true,
-  demoExamples: DEMO
+  demoExamples: NO_AI
 };
 // 서버(backend/validate.js requireMessages)가 받는 이력 상한과 맞춘다
 const MAX_HISTORY = 20;
@@ -69,7 +69,7 @@ export default function Chatbot() {
             <span className="chat-label">{msg.role === 'user' ? '나' : '경자피티'}</span>
             <div className="chat-bubble">
               {msg.content}
-              {DEMO && msg.demoExamples && (
+              {NO_AI && msg.demoExamples && (
                 <div className="demo-examples">
                   {DEMO_QA.map(qa => (
                     <button key={qa.question} className="demo-chip" onClick={() => send(qa.question)} disabled={loading}>

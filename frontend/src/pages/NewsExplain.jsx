@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { API, DEMO } from '../config';
+import { API, NO_AI } from '../config';
 import Loading from '../components/Loading';
 
 export default function NewsExplain() {
@@ -33,7 +33,7 @@ export default function NewsExplain() {
     <div>
       <h1 className="page-title">뉴스 해설</h1>
       <p className="page-desc">경제 기사 본문을 붙여 넣으면 ① 무슨 일인가 ② 왜 일어났나 ③ 누구에게 어떤 영향인가 ④ 다르게 보는 시각 순서로 정리합니다.</p>
-      {DEMO && <div className="sample-note">데모 모드에서는 뉴스 해설이 동작하지 않습니다(기사마다 내용이 달라 미리 답을 써 둘 수 없음).</div>}
+      {NO_AI && <div className="sample-note">지금은 뉴스 해설이 동작하지 않습니다(기사마다 내용이 달라 미리 답을 써 둘 수 없음).</div>}
       <div className="form-group">
         <label htmlFor="news-text">경제 기사 본문</label>
         <textarea
