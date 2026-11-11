@@ -1,0 +1,10 @@
+node_modules/
+.env
+dist/
+.DS_Store
+
+# 로컬 실행 로그
+.run.log
+.run-frontend.log
+
+.vercel

@@ -1,0 +1,234 @@
+/* 경자피티 전용 스타일. 기본 틀(App.css)은 형제 프로젝트 politics-ai 와 같고, 여기에는 추가분만 둔다. */
+:root {
+  --gain: #3ecf8e;
+  --loss: #ff7a6b;
+  --accent: #3ecf8e;
+}
+
+.page-desc {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  margin: -16px 0 22px;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #10261c;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.ghost-btn {
+  display: inline-block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 20px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+
+.ghost-btn:hover { border-color: #555; }
+
+.sample-note {
+  background: #1d1a10;
+  border: 1px solid #4a3f1c;
+  color: #e9cf86;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+/* 홈: 이슈 목록 */
+.home { padding-top: 32px; }
+.feed-title {
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 28px 0 10px;
+}
+.issue-feed { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.issue-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+.issue-card:hover { background: var(--surface2); }
+.issue-card-meta { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; }
+.issue-card-title { font-size: 0.98rem; font-weight: 700; line-height: 1.45; }
+
+/* 이슈 페이지 */
+.issue-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; }
+.issue-title { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; line-height: 1.35; }
+.issue-shorts { color: var(--text-muted); font-size: 0.8rem; margin: 6px 0 18px; }
+.issue-section { margin-top: 30px; }
+.issue-section h2 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+.issue-section p { font-size: 0.9rem; line-height: 1.75; }
+.issue-section p.as-of { color: var(--text-muted); font-size: 0.78rem; margin-top: 6px; }
+.impact-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.impact-list li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.impact-list li.mine { border-color: var(--accent); }
+.impact-list strong { font-size: 0.8rem; color: var(--accent); }
+.persona-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.persona-chip {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+.persona-chip.active { background: #fff; color: #000; border-color: #fff; font-weight: 600; }
+.views-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.views-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.view-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+.view-card h3 { font-size: 0.92rem; margin-bottom: 6px; }
+.view-card ul { padding-left: 18px; margin-bottom: 8px; }
+.view-claim { font-weight: 500; margin-bottom: 10px; }
+.view-label { font-size: 0.74rem; color: var(--text-muted); margin: 8px 0 4px; }
+.compare-intro { font-size: 0.88rem; line-height: 1.6; margin: 16px 0 12px; }
+.free-topic { margin-top: 28px; }
+.free-topic label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 7px; }
+.terms div { margin-bottom: 8px; font-size: 0.86rem; line-height: 1.6; }
+.terms dt { font-weight: 700; display: inline; margin-right: 6px; }
+.terms dd { display: inline; color: var(--text-muted); }
+.source-list { padding-left: 18px; font-size: 0.84rem; line-height: 1.8; }
+.source-list a { color: #9cc4ff; }
+.issue-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
+.issue-actions .submit-btn { text-decoration: none; display: inline-block; }
+.disclaimer { color: var(--text-muted); font-size: 0.75rem; margin-top: 18px; }
+
+/* 이슈 계산기 */
+.calc-card {
+  background: var(--surface);
+  border: 1px solid #2f4a3c;
+  border-radius: 14px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "mine result" "from from" "notes notes";
+  gap: 16px;
+}
+.calc-mine { grid-area: mine; }
+.calc-from { grid-area: from; border-top: 1px solid var(--border); padding-top: 14px; }
+.pass-group { margin-top: 14px; max-width: 320px; }
+/* 대출 조건은 입력칸이 4개라 금리·기간을 한 줄에 둬서 결과가 첫 화면에 들어오게 한다 */
+.calc-mine-rate_change { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; align-content: start; }
+.calc-mine-rate_change > * { grid-column: 1 / -1; }
+.calc-mine-rate_change > .form-group:nth-child(3),
+.calc-mine-rate_change > .form-group:nth-child(4) { grid-column: auto; }
+.calc-section-label { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+.var-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.var-list li { display: grid; grid-template-columns: auto 1fr; column-gap: 8px; font-size: 0.86rem; }
+.var-name { color: var(--text-muted); }
+.var-value { font-weight: 700; text-align: right; }
+.var-source { grid-column: 1 / -1; font-size: 0.72rem; color: #7a7a7a; line-height: 1.45; margin-top: 2px; }
+.input-note { font-size: 0.72rem; color: #8a8a8a; margin-top: 5px; line-height: 1.45; }
+.calc-result {
+  grid-area: result;
+  align-self: start;
+  background: #0d1612;
+  border-radius: 12px;
+  padding: 16px;
+}
+.result-label { font-size: 0.84rem; color: #b9c9c0; }
+.result-amount { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; margin: 4px 0; }
+.result-amount.gain { color: var(--gain); }
+.result-amount.loss { color: var(--loss); }
+.result-tag { font-size: 0.8rem; margin-left: 8px; font-weight: 500; vertical-align: middle; }
+.result-sub { font-size: 0.86rem; color: #cfd8d3; }
+.result-details { list-style: none; margin-top: 12px; border-top: 1px solid #1f2f27; padding-top: 10px; }
+.result-details li { display: flex; justify-content: space-between; gap: 12px; font-size: 0.78rem; color: #a9b5ae; padding: 3px 0; }
+.result-details li span:last-child { text-align: right; }
+.calc-error { color: var(--loss); font-size: 0.86rem; }
+.calc-notes { padding-left: 18px; font-size: 0.76rem; color: var(--text-muted); line-height: 1.65; margin-top: 14px; }
+.calc-card .calc-notes { grid-area: notes; margin-top: 0; }
+.check-list { border: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; }
+.check-list legend { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+
+.num-input { position: relative; display: flex; align-items: center; }
+.num-input input { padding-right: 52px; font-size: 1rem; }
+.num-unit { position: absolute; right: 14px; color: var(--text-muted); font-size: 0.85rem; pointer-events: none; }
+
+select {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+/* 대출 계산기 */
+.calc-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+.calc-form .form-group:last-child { grid-column: 1 / -1; }
+.group-label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 7px; font-weight: 500; }
+.method-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.table-wrap { overflow-x: auto; margin-top: 18px; border: 1px solid var(--border); border-radius: var(--radius); }
+.rate-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; min-width: 560px; }
+.rate-table th, .rate-table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.rate-table th { color: var(--text-muted); font-weight: 500; font-size: 0.76rem; background: var(--surface); }
+.rate-table th:first-child, .rate-table td:first-child { text-align: left; }
+.rate-table tr:last-child td { border-bottom: none; }
+.rate-table .base-row { background: #17171a; font-weight: 700; }
+.rate-table .delta { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 400; }
+.rate-table td.gain { color: var(--gain); }
+.rate-table td.loss { color: var(--loss); }
+
+@media (max-width: 600px) {
+  /* 메뉴를 숨기지 않고 가로로 밀어서 보게 한다(쇼츠 시청자는 대부분 휴대폰) */
+  .navbar { padding: 0 12px; gap: 10px; }
+  .navbar-links { overflow-x: auto; scrollbar-width: none; }
+  .navbar-links::-webkit-scrollbar { display: none; }
+  .navbar-links .nav-link:not(.active) { display: inline-block; }
+  .nav-link { white-space: nowrap; padding: 6px 9px; }
+  .calc-card { grid-template-columns: 1fr; grid-template-areas: "mine" "result" "from" "notes"; padding: 14px; gap: 12px; }
+  .calc-mine .form-group { margin-bottom: 8px; }
+  .calc-form { grid-template-columns: 1fr; }
+  .views-grid, .views-grid.cols-3 { grid-template-columns: 1fr; }
+  .result-amount { font-size: 1.6rem; }
+  /* 데모 안내 띠(두 줄)까지 빼야 바깥 스크롤이 안 생긴다 */
+  .chat-container { height: calc(100dvh - 160px); }
+  .issue-title { font-size: 1.25rem; }
+}
