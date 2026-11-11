@@ -4,6 +4,7 @@ const links = [
   { to: '/', label: '홈' },
   { to: '/wallet', label: '내 지갑', also: ['/me'] },
   { to: '/freedom', label: '자유 숫자' },
+  { to: '/benefits', label: '받을 돈' },
   { to: '/calc', label: '계산기' },
   { to: '/chat', label: '챗봇' },
   { to: '/news', label: '뉴스해설' },

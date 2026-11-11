@@ -4,10 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/sync-benefits.mjs --if-key",
     "build": "vite build",
     "build:demo": "vite build --mode demo",
     "preview": "vite preview",
-    "test": "node --test"
+    "test": "node --test",
+    "sync:benefits": "node scripts/sync-benefits.mjs"
   },
   "dependencies": {
     "react": "^18.2.0",

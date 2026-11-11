@@ -4,6 +4,7 @@
   "description": "경자피티 — 내 지갑 기준 경제 해설. 루트에서 npm test 로 백엔드·프론트 테스트를 한 번에 돌린다.",
   "scripts": {
     "test": "npm test --prefix backend && npm test --prefix frontend",
-    "check:issues": "node --test frontend/test/issues.test.js"
+    "check:issues": "node --test frontend/test/issues.test.js",
+    "sync:benefits": "npm run sync:benefits --prefix frontend"
   }
 }

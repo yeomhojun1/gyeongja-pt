@@ -11,6 +11,7 @@ import Compare from './pages/Compare';
 import MyWallet from './pages/MyWallet';
 import Ledger from './pages/Ledger';
 import Freedom from './pages/Freedom';
+import Benefits from './pages/Benefits';
 import NotFound from './pages/NotFound';
 
 // 데모(GitHub Pages)는 새로고침 404 를 피하려고 HashRouter 를 쓴다.
@@ -41,6 +42,7 @@ function App() {
             <Route path="/me" element={<MyWallet />} />
             <Route path="/wallet" element={<Ledger />} />
             <Route path="/freedom" element={<Freedom />} />
+            <Route path="/benefits" element={<Benefits />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

@@ -4,6 +4,7 @@
 
 import { METHODS } from './loan.js';
 import { FREEDOM_RANGES } from './freedom.js';
+import { emptyBenefitProfile, isEmptyBenefitProfile, sanitizeBenefitProfile } from './benefits.js';
 
 export const PROFILE_KEY = 'gyeongjapt.profile';
 
@@ -59,6 +60,7 @@ export function emptyProfile() {
     returnPct: null,
     withdrawPct: null,
     loan: null,
+    benefit: emptyBenefitProfile(), // 받을 수 있는 돈 찾기 조건(lib/benefits.js)
     spend: Object.fromEntries(Object.keys(SPEND_KEYS).map((k) => [k, null]))
   };
 }
@@ -77,6 +79,7 @@ export function sanitizeProfile(raw) {
     // 잔액·금리·기간이 다 있어야 계산에 쓸 수 있다
     p.loan = loan.principal !== null && loan.ratePct !== null && loan.months !== null ? loan : null;
   }
+  p.benefit = sanitizeBenefitProfile(raw.benefit);
   if (raw.spend && typeof raw.spend === 'object') {
     for (const k of Object.keys(SPEND_KEYS)) p.spend[k] = pick(raw.spend[k], SPEND_RANGE);
   }
@@ -85,7 +88,7 @@ export function sanitizeProfile(raw) {
 
 /** 아무것도 안 넣은 프로필인가 */
 export function isEmptyProfile(p) {
-  return !p.job && !p.housing && !p.loan
+  return !p.job && !p.housing && !p.loan && isEmptyBenefitProfile(p.benefit)
     && Object.keys(NUMBER_FIELDS).every((k) => p[k] === null)
     && Object.values(p.spend).every((v) => v === null);
 }

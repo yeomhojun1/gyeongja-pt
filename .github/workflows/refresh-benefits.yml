@@ -1,0 +1,35 @@
+# 매주 정부24 혜택 데이터를 다시 받아 본다(받을 수 있는 돈 찾기).
+# - 저장소 시크릿 DATA_GO_KR_KEY(공공데이터포털 인증키)로 받는다. 키가 막히거나 API 가 바뀌면 이 작업이 실패해서 알 수 있다
+# - 시크릿 VERCEL_DEPLOY_HOOK 이 있으면 Vercel 을 다시 빌드시킨다(빌드할 때 prebuild 가 최신 데이터를 받음)
+# 받은 파일은 저장소에 올리지 않는다(.gitignore). 손으로 돌리려면 Actions 탭 → Refresh benefits data → Run workflow
+name: Refresh benefits data
+
+on:
+  schedule:
+    - cron: '0 18 * * 0' # 매주 월요일 03:00 (한국 시간)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # 스크립트는 Node 기본 기능만 써서 npm 설치가 필요 없다
+      - name: 혜택 데이터 받기
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+        run: |
+          if [ -z "$DATA_GO_KR_KEY" ]; then echo "::error::저장소 시크릿 DATA_GO_KR_KEY 가 없습니다"; exit 1; fi
+          node frontend/scripts/sync-benefits.mjs
+      - name: Vercel 다시 빌드
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "VERCEL_DEPLOY_HOOK 이 없어 다시 빌드는 건너뜁니다(배포 연결 전)"; exit 0; fi
+          curl -fsS -X POST "$HOOK" > /dev/null && echo "Vercel 다시 빌드 요청함"

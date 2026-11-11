@@ -304,3 +304,23 @@ select {
   .chat-container { height: calc(100dvh - 160px); }
   .issue-title { font-size: 1.25rem; }
 }
+
+/* 받을 수 있는 돈 찾기 */
+.benefits .form-group { margin-bottom: 14px; }
+.benefit-tabs { margin-bottom: 14px; }
+.benefit-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.benefit-card h3 { font-size: 0.95rem; font-weight: 700; line-height: 1.45; margin: 4px 0 6px; }
+.benefit-card p { font-size: 0.84rem; line-height: 1.6; color: #cfd8d3; }
+.benefit-meta { font-size: 0.72rem; color: var(--text-muted); }
+.benefit-deadline { font-size: 0.76rem; color: var(--text-muted); margin-top: 8px; }
+.benefit-unknown { font-size: 0.76rem; color: #e0b86b; margin-top: 4px; }
+.benefit-link { display: inline-block; margin-top: 10px; font-size: 0.82rem; color: var(--accent); }
+.benefit-more { margin-top: 14px; }
+.benefits code { font-size: 0.8rem; }
+.benefit-conds summary { cursor: pointer; list-style: none; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; }
+.benefit-conds summary::-webkit-details-marker { display: none; }
+.benefit-conds-title { font-size: 1rem; font-weight: 700; }
+.benefit-conds-title::after { content: ' ▾'; color: var(--text-muted); font-weight: 400; }
+.benefit-conds[open] .benefit-conds-title::after { content: ' ▴'; }
+.benefit-conds-sum { font-size: 0.8rem; color: #b9c9c0; line-height: 1.5; }
