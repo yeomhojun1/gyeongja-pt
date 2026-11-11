@@ -8,6 +8,9 @@ import Calculator from './pages/Calculator';
 import Chatbot from './pages/Chatbot';
 import NewsExplain from './pages/NewsExplain';
 import Compare from './pages/Compare';
+import MyWallet from './pages/MyWallet';
+import Ledger from './pages/Ledger';
+import Freedom from './pages/Freedom';
 import NotFound from './pages/NotFound';
 
 // 데모(GitHub Pages)는 새로고침 404 를 피하려고 HashRouter 를 쓴다.
@@ -35,6 +38,9 @@ function App() {
             <Route path="/chat" element={<Chatbot />} />
             <Route path="/news" element={<NewsExplain />} />
             <Route path="/compare" element={<Compare />} />
+            <Route path="/me" element={<MyWallet />} />
+            <Route path="/wallet" element={<Ledger />} />
+            <Route path="/freedom" element={<Freedom />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

@@ -8,3 +8,6 @@ dist/
 .run-frontend.log
 
 .vercel
+
+# 인수인계 문서(로컬 전용)
+HANDOFF-*.md

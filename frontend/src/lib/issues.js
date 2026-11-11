@@ -2,6 +2,7 @@
 // 화면(src/content/index.js)이 같이 쓴다. 쇼츠 제작 과정이 만든 초안도 이 규칙을 통과해야 게시된다.
 
 import { TEMPLATES } from './templates.js';
+import { SPEND_KEYS } from './profile.js';
 
 export const PERSONAS = ['대출자', '세입자', '예금자', '직장인', '자영업자'];
 export const SLOTS = ['아침', '점심', '저녁'];
@@ -50,6 +51,12 @@ export function validateIssue(issue) {
       const bad = t.checkVars(v);
       if (bad) errs.push(`calculator.vars: ${bad}`);
       if (!isText(c.resultLabel)) errs.push('calculator.resultLabel(결과 문장 앞부분)이 필요합니다.');
+      // "오른다고 가정하면"처럼 실제 변화가 아닌 계산이면 true(내 지갑 장부 합계에서 뺀다)
+      if (c.scenario !== undefined && typeof c.scenario !== 'boolean') errs.push('calculator.scenario 는 true/false 여야 합니다.');
+      // 가격 변화형이 내 지갑의 어느 지출 항목을 쓰는지(없으면 리터 단위만 유류비로 본다)
+      if (c.spendKey !== undefined && (c.template !== 'price_change' || !SPEND_KEYS[c.spendKey])) {
+        errs.push(`calculator.spendKey 는 가격 변화형에서만 쓰고 ${Object.keys(SPEND_KEYS).join('·')} 중 하나여야 합니다.`);
+      }
       // 영상에서 가져온 숫자는 전부 어디서 왔는지 적어야 한다
       for (const k of Object.keys(v)) {
         if (typeof v[k] === 'number' && !isText(c.varSources?.[k])) errs.push(`calculator.varSources.${k}(이 숫자의 출처)가 필요합니다.`);

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import NumberInput from './NumberInput';
 import { TEMPLATES, runTemplate } from '../lib/templates';
 import { signedWon } from '../lib/loan';
+import { profileInputs, sameAsProfile, withCalculatorInputs } from '../lib/profile';
 
 const VAR_LABELS = {
   unitPrice: '현재 가격',
@@ -21,23 +23,29 @@ const VAR_UNITS = { unitPrice: '원', perUnitChange: '원', changePct: '%', pass
 const PERIOD_TEXT = { month: '매달', year: '매년', once: '한 번' };
 
 // 이슈 페이지 첫 화면의 계산기. 영상에서 가져온 값(vars)은 이미 들어가 있고, 시청자는 내 숫자만 바꾼다.
-export default function IssueCalculator({ calculator }) {
+// 내 지갑 프로필이 있으면 내 숫자도 미리 채우고, 없으면 지금 넣은 숫자를 프로필에 저장할 수 있게 한다.
+export default function IssueCalculator({ calculator, profile, onSaveProfile }) {
   const { template, vars, varSources = {}, inputs: defaults = {}, inputNotes = {}, notes = [], resultLabel } = calculator;
   const t = TEMPLATES[template];
   const initial = () => {
-    const v = { ...defaults };
+    const v = { ...defaults, ...profileInputs(calculator, profile) };
     if (template === 'subsidy' && !Array.isArray(v.checks)) v.checks = vars.conditions.map(() => false);
     return v;
   };
   const [inp, setInp] = useState(initial);
   const [pass, setPass] = useState(vars.passThroughPct);
+  const [saved, setSaved] = useState(false);
 
   // 다른 이슈로 이동하면 기본값으로 되돌린다
-  useEffect(() => { setInp(initial()); setPass(vars.passThroughPct); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [calculator]);
+  useEffect(() => { setInp(initial()); setPass(vars.passThroughPct); setSaved(false); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [calculator]);
 
   const effVars = pass === undefined ? vars : { ...vars, passThroughPct: Number.isFinite(pass) ? Math.min(100, Math.max(0, pass)) : vars.passThroughPct };
   const r = runTemplate(template, effVars, inp);
   const set = (k) => (v) => setInp((prev) => ({ ...prev, [k]: v }));
+  const fromProfile = profileInputs(calculator, profile);
+  const usingProfile = sameAsProfile(calculator, inp, profile);
+  const nextProfile = r.error || usingProfile ? null : withCalculatorInputs(calculator, inp, profile);
+  const save = () => { onSaveProfile(nextProfile); setSaved(true); };
 
   const shownVars = Object.entries(vars).filter(([k, v]) => typeof v === 'number' && k !== 'passThroughPct');
 
@@ -82,10 +90,24 @@ export default function IssueCalculator({ calculator }) {
             <div key={f.key} className="form-group">
               <label htmlFor={`in-${f.key}`}>{f.label}</label>
               <NumberInput id={`in-${f.key}`} value={inp[f.key]} onChange={set(f.key)} unit={f.unit} decimals={f.step ? 2 : 0} />
-              {inputNotes[f.key] && <div className="input-note">{inputNotes[f.key]}</div>}
+              {f.key in fromProfile
+                ? <div className="input-note">내 지갑에 저장된 값입니다.</div>
+                : inputNotes[f.key] && <div className="input-note">{inputNotes[f.key]}</div>}
             </div>
           );
         })}
+        {usingProfile && (
+          <div className="profile-bar">
+            {saved ? '내 지갑에 저장했어요. 다음 이슈부터 자동으로 들어갑니다.' : '내 지갑 숫자로 계산했어요.'}
+            <Link to="/me">내 지갑 고치기</Link>
+          </div>
+        )}
+        {nextProfile && (
+          <div className="profile-bar">
+            <button type="button" className="profile-save" onClick={save}>이 숫자를 내 지갑에 저장</button>
+            <span>다음 이슈부터 자동으로 들어갑니다. 이 기기에만 저장돼요.</span>
+          </div>
+        )}
       </div>
 
       <div className="calc-result" aria-live="polite">

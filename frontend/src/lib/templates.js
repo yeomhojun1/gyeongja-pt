@@ -153,7 +153,7 @@ export const TEMPLATES = {
 };
 
 // 받침 유무에 따라 조사를 고른다 ('지출을' / '금리를'). backend/validate.js josa 와 같은 방식
-function josa(word, withFinal, withoutFinal) {
+export function josa(word, withFinal, withoutFinal) {
   const last = String(word).slice(-1).charCodeAt(0);
   const hasFinal = last >= 0xac00 && last <= 0xd7a3 ? (last - 0xac00) % 28 !== 0 : true;
   return `${word}${hasFinal ? withFinal : withoutFinal}`;

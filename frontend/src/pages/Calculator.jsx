@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import NumberInput from '../components/NumberInput';
 import { METHODS, compareRates, validateLoan, won, signedWon } from '../lib/loan';
+import { useProfile } from '../lib/useProfile';
 
 // 내 상황 계산기: 대출 잔액·금리·남은 기간·상환 방식을 넣으면 금리가 바뀔 때 납입액·이자 변화를 표로 보여 준다.
 // 계산은 전부 lib/loan.js 코드가 한다. AI·서버 없이 데모에서도 똑같이 동작한다.
@@ -11,10 +12,12 @@ const FIRST_LABEL = {
 };
 
 export default function Calculator() {
-  const [principal, setPrincipal] = useState(100_000_000);
-  const [ratePct, setRatePct] = useState(4.5);
-  const [years, setYears] = useState(30);
-  const [method, setMethod] = useState('equalPayment');
+  // 내 지갑에 대출이 있으면 그 값으로, 없으면 예시값(1억·4.5%·30년)으로 시작한다
+  const [{ loan }] = useProfile();
+  const [principal, setPrincipal] = useState(loan ? loan.principal : 100_000_000);
+  const [ratePct, setRatePct] = useState(loan ? loan.ratePct : 4.5);
+  const [years, setYears] = useState(loan ? Math.round((loan.months / 12) * 100) / 100 : 30);
+  const [method, setMethod] = useState(loan ? loan.method : 'equalPayment');
 
   const months = Math.round(years * 12);
   const input = { principal, ratePct, months, method };
@@ -24,7 +27,7 @@ export default function Calculator() {
   return (
     <div>
       <h1 className="page-title">대출 계산기</h1>
-      <p className="page-desc">금리가 0.25·0.5·1%p 오르거나 내리면 내 대출 납입액과 이자가 얼마나 바뀌는지 봅니다.</p>
+      <p className="page-desc">금리가 0.25·0.5·1%p 오르거나 내리면 내 대출 납입액과 이자가 얼마나 바뀌는지 봅니다.{loan && ' 내 지갑에 저장한 대출로 시작했어요.'}</p>
 
       <div className="calc-form">
         <div className="form-group">

@@ -2,6 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 import { findIssue } from '../content';
 import { PERSONAS } from '../lib/issues';
 import { usePersona } from '../lib/persona';
+import { derivePersonas } from '../lib/profile';
+import { useProfile } from '../lib/useProfile';
 import { TEMPLATES } from '../lib/templates';
 import IssueCalculator from '../components/IssueCalculator';
 import NotFound from './NotFound';
@@ -11,11 +13,14 @@ export default function Issue() {
   const { id } = useParams();
   const issue = findIssue(id);
   const [persona, setPersona] = usePersona();
+  const [profile, saveProfile] = useProfile();
   if (!issue) return <NotFound />;
 
-  // 내 상황을 골랐으면 그 영향을 맨 앞에, 고르지 않았으면 이슈에 적힌 순서대로
+  // 내 상황을 골랐으면 그것을, 안 골랐으면 내 지갑 프로필로 추정한 상황을 맨 앞에. 둘 다 없으면 이슈에 적힌 순서대로
   const impactKeys = Object.keys(issue.impacts);
-  const ordered = persona && issue.impacts[persona] ? [persona, ...impactKeys.filter((k) => k !== persona)] : impactKeys;
+  const fromProfile = persona ? [] : derivePersonas(profile);
+  const mine = (persona ? [persona] : fromProfile).filter((k) => issue.impacts[k]);
+  const ordered = [...mine, ...impactKeys.filter((k) => !mine.includes(k))];
 
   return (
     <article className="issue">
@@ -31,7 +36,7 @@ export default function Issue() {
       <h1 className="issue-title">{issue.title}</h1>
       <p className="issue-shorts">쇼츠 제목: {issue.shortsTitle}</p>
 
-      {issue.calculator && <IssueCalculator calculator={issue.calculator} />}
+      {issue.calculator && <IssueCalculator calculator={issue.calculator} profile={profile} onSaveProfile={saveProfile} />}
 
       <section className="issue-section">
         <h2>30초 요약</h2>
@@ -56,9 +61,12 @@ export default function Issue() {
         {persona && !issue.impacts[persona] && (
           <p className="muted">이 이슈는 {persona}에게 직접적인 영향이 크지 않습니다.</p>
         )}
+        {fromProfile.length > 0 && (
+          <p className="muted">내 지갑 기준: {fromProfile.join('·')}{mine.length === 0 && ' — 이 이슈는 직접적인 영향이 크지 않습니다.'}</p>
+        )}
         <ul className="impact-list">
           {ordered.map((k) => (
-            <li key={k} className={k === persona ? 'mine' : ''}>
+            <li key={k} className={mine.includes(k) ? 'mine' : ''}>
               <strong>{k}</strong>
               <span>{issue.impacts[k]}</span>
             </li>

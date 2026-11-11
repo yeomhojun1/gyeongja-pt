@@ -17,6 +17,7 @@
   },
   "calculator": {
     "template": "rate_change",
+    "scenario": true,
     "resultLabel": "대출금리가 0.25%p 오른다고 가정하면 내 납입액은",
     "vars": {
       "deltaPctPoint": 0.25,

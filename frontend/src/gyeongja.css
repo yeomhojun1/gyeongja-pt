@@ -38,6 +38,9 @@
   color: var(--text);
   text-decoration: none;
   font-size: 0.88rem;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .ghost-btn:hover { border-color: #555; }
@@ -216,9 +219,78 @@ select {
 .rate-table td.gain { color: var(--gain); }
 .rate-table td.loss { color: var(--loss); }
 
+/* 내 지갑 */
+.wallet-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 22px;
+  text-align: left;
+  background: #0d1612;
+  border: 1px solid #2f4a3c;
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  text-decoration: none;
+}
+.wallet-card strong { color: var(--accent); font-size: 0.92rem; }
+.wallet-card span { font-size: 0.82rem; color: #b9c9c0; line-height: 1.55; }
+.wallet-section { margin-top: 26px; }
+.wallet-section h2 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+.wallet .calc-form .form-group:last-child { grid-column: auto; }
+.wallet .calc-form .form-group.wide { grid-column: 1 / -1; }
+.wallet-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+.save-msg { color: var(--accent); font-size: 0.84rem; margin-top: 12px; }
+.profile-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; font-size: 0.76rem; color: #b9c9c0; line-height: 1.5; }
+.profile-bar a { color: var(--accent); }
+.profile-save {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.wallet-next { margin-top: 12px; }
+.page-desc a { color: var(--accent); }
+.ledger-summary { background: #0d1612; border: 1px solid #2f4a3c; border-radius: 12px; padding: 16px; }
+.ledger-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ledger-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+.ledger-row:hover { border-color: #555; }
+.ledger-date { display: block; font-size: 0.72rem; color: var(--text-muted); }
+.ledger-amount { font-weight: 700; white-space: nowrap; }
+.ledger-amount.gain { color: var(--gain); }
+.ledger-amount.loss { color: var(--loss); }
+.ledger-need { font-size: 0.78rem; color: var(--accent); white-space: nowrap; }
+
+/* 경제적 자유 숫자 */
+.freedom-card { margin-top: 10px; }
+.freedom-result { margin-top: 18px; }
+.freedom-bar { height: 8px; background: #1f2f27; border-radius: 999px; overflow: hidden; margin: 14px 0 6px; }
+.freedom-bar span { display: block; height: 100%; background: var(--gain); border-radius: 999px; }
+.freedom-when { margin-top: 14px; font-size: 0.95rem; }
+.freedom-when strong { color: var(--accent); font-size: 1.15rem; }
+
 @media (max-width: 600px) {
   /* 메뉴를 숨기지 않고 가로로 밀어서 보게 한다(쇼츠 시청자는 대부분 휴대폰) */
   .navbar { padding: 0 12px; gap: 10px; }
+  .navbar-brand { white-space: nowrap; flex-shrink: 0; }
   .navbar-links { overflow-x: auto; scrollbar-width: none; }
   .navbar-links::-webkit-scrollbar { display: none; }
   .navbar-links .nav-link:not(.active) { display: inline-block; }
