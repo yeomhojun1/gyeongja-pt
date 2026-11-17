@@ -8,6 +8,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildSnapshot } from '../src/lib/benefits.js';
+import { buildDetails } from './benefit-pages.mjs';
 
 // 문서에는 경로(/gov24/v3/...)만 있고 호스트가 없다. odcloud 계열 API 의 일반 주소를 기본값으로 두고 바꿀 수 있게 한다
 const DEFAULT_BASE = 'https://api.odcloud.kr/api/gov24/v3';
@@ -47,7 +48,7 @@ export async function fetchAllPages(operation, { key, base = DEFAULT_BASE, perPa
   throw new Error(`${operation}: ${MAX_PAGES}쪽을 넘어 멈췄습니다(perPage 확인 필요).`);
 }
 
-export async function syncBenefits({ key, base, out, fetchImpl, log = console.log, now = new Date() }) {
+export async function syncBenefits({ key, base, out, detailsOut, fetchImpl, log = console.log, now = new Date() }) {
   if (!key) throw new Error('DATA_GO_KR_KEY 환경 변수에 공공데이터포털 인증키를 넣어 주세요.');
   const list = await fetchAllPages('serviceList', { key, base, fetchImpl, log });
   const conds = await fetchAllPages('supportConditions', { key, base, fetchImpl, log });
@@ -55,6 +56,12 @@ export async function syncBenefits({ key, base, out, fetchImpl, log = console.lo
   await mkdir(dirname(out), { recursive: true });
   await writeFile(out, JSON.stringify(snap));
   log(`저장: ${out} (서비스 ${snap.count}개, 목록 ${list.length} · 지원조건 ${conds.length})`);
+  // 혜택 검색 페이지(scripts/benefit-pages.mjs)가 쓰는 긴 글. 앱은 안 받으므로 public 밖에 둔다
+  if (detailsOut) {
+    await mkdir(dirname(detailsOut), { recursive: true });
+    await writeFile(detailsOut, JSON.stringify(buildDetails(list, snap.syncedAt)));
+    log(`저장: ${detailsOut}`);
+  }
   return snap;
 }
 
@@ -70,7 +77,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   syncBenefits({
     key,
     base: process.env.BENEFITS_API_BASE || DEFAULT_BASE,
-    out: resolve(here, '../public/benefits.json')
+    out: resolve(here, '../public/benefits.json'),
+    detailsOut: resolve(here, '../.cache/benefit-details.json')
   }).catch((e) => {
     console.error(`실패: ${e.message}`);
     process.exitCode = 1;

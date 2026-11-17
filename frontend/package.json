@@ -6,6 +6,7 @@
     "dev": "vite",
     "prebuild": "node scripts/sync-benefits.mjs --if-key",
     "build": "vite build",
+    "postbuild": "node scripts/benefit-pages.mjs",
     "build:demo": "vite build --mode demo",
     "preview": "vite preview",
     "test": "node --test",

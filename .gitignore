@@ -14,6 +14,8 @@ HANDOFF-*.md
 
 # 혜택 데이터(npm run sync:benefits 로 생성, 수 MB). 배포 때는 빌드 직전에 키로 받는다(prebuild)
 frontend/public/benefits.json
+# 혜택 검색 페이지용 긴 글(동기화 때 같이 생성)
+frontend/.cache/
 
 # vercel link 가 만드는 토큰 파일
 .env.local

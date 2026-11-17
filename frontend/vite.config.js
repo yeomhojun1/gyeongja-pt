@@ -15,6 +15,8 @@ export default defineConfig(({ mode }) => {
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      // 혜택 검색 페이지(빌드 뒤 scripts/benefit-pages.mjs 가 만드는 정적 HTML)는 앱 화면으로 가로채지 않는다
+      workbox: { navigateFallbackDenylist: [/^\/benefit\//, /^\/sitemap\.xml$/, /^\/robots\.txt$/] },
       includeAssets: ['icon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: '경자피티',

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import NumberInput from '../components/NumberInput';
+import { DEMO } from '../config';
 import { useProfile } from '../lib/useProfile';
 import { GROUPS, findBenefits, isEmptyBenefitProfile, readSnapshot, sanitizeBenefitProfile, withJobHints, withRegions } from '../lib/benefits';
 
@@ -8,6 +9,8 @@ import { GROUPS, findBenefits, isEmptyBenefitProfile, readSnapshot, sanitizeBene
 const PAGE = 20;
 const TABS = { match: '조건이 맞아요', check: '확인이 더 필요해요' };
 const LABEL = Object.fromEntries(GROUPS.flatMap((g) => Object.entries(g.codes)));
+// 혜택별 설명 페이지(/benefit/…)는 배포 빌드 뒤에 만들어진다(scripts/benefit-pages.mjs). 개발 서버·데모엔 없다
+const PAGES = import.meta.env.PROD && !DEMO;
 
 /** 접힌 조건 칸에 보여 줄 한 줄 요약 */
 function summaryText(me) {
@@ -70,7 +73,10 @@ function Card({ item }) {
       {(s.support || s.summary) && <p>{s.support || s.summary}</p>}
       {s.deadline && <div className="benefit-deadline">신청 기한: {s.deadline}</div>}
       {item.unknown.length > 0 && <div className="benefit-unknown">확인 필요: {item.unknown.join(', ')}</div>}
-      {s.url && <a href={s.url} target="_blank" rel="noopener noreferrer" className="benefit-link">정부24에서 자세히 보기 ↗</a>}
+      <div className="benefit-links">
+        {PAGES && <a href={`/benefit/${s.id}`} className="benefit-link">대상·신청 방법 보기</a>}
+        {s.url && <a href={s.url} target="_blank" rel="noopener noreferrer" className="benefit-link">정부24에서 자세히 보기 ↗</a>}
+      </div>
     </li>
   );
 }
@@ -163,6 +169,7 @@ export default function Benefits() {
             )}
             <p className="as-of muted">
               자료: {data.data.source}. 받아 온 때 {data.data.syncedAt.slice(0, 10)}, 서비스 {data.data.count.toLocaleString('ko-KR')}개.
+              {PAGES && <> <a href="/benefit/">분야별·지역별로 전체 둘러보기</a></>}
             </p>
           </>
         )}

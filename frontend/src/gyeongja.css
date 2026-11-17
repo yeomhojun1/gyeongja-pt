@@ -316,6 +316,7 @@ select {
 .benefit-deadline { font-size: 0.76rem; color: var(--text-muted); margin-top: 8px; }
 .benefit-unknown { font-size: 0.76rem; color: #e0b86b; margin-top: 4px; }
 .benefit-link { display: inline-block; margin-top: 10px; font-size: 0.82rem; color: var(--accent); }
+.benefit-links { display: flex; flex-wrap: wrap; column-gap: 16px; }
 .benefit-more { margin-top: 14px; }
 .benefits code { font-size: 0.8rem; }
 .benefit-conds summary { cursor: pointer; list-style: none; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; }
