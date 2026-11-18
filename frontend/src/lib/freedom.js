@@ -20,8 +20,8 @@ const LABELS = {
   monthlyExpense: '한 달 생활비',
   assets: '지금 모아 둔 돈',
   monthlySaving: '한 달 저축',
-  returnPct: '수익률 가정',
-  withdrawPct: '인출률 가정'
+  returnPct: '1년에 불어나는 비율(실질 수익률)',
+  withdrawPct: '1년에 꺼내 쓰는 비율(인출률)'
 };
 
 const UNITS = { monthlyExpense: '원', assets: '원', monthlySaving: '원', returnPct: '%', withdrawPct: '%' };
@@ -58,7 +58,7 @@ export function monthsToTarget({ assets, monthlySaving, target, returnPct }) {
 
 /**
  * 화면 결과 한 번에. extraMonthly 는 내 지갑 장부의 이번 달 영향(매달 ±원)처럼 저축에 더해 볼 금액.
- * whatIf: 저축 +10만, 생활비 −10만(그만큼 저축), 수익률 가정 ±1%p
+ * whatIf: 저축 +10만, 생활비 −10만(그만큼 저축), 불어나는 비율(수익률 가정) ±1%p
  */
 export function calcFreedom(inp, { extraMonthly = 0 } = {}) {
   const target = targetAmount(inp.monthlyExpense, inp.withdrawPct);
@@ -77,7 +77,7 @@ export function calcFreedom(inp, { extraMonthly = 0 } = {}) {
   for (const d of [-1, 1]) {
     const returnPct = inp.returnPct + d;
     if (returnPct < FREEDOM_RANGES.returnPct.min || returnPct > FREEDOM_RANGES.returnPct.max) continue;
-    whatIf.push({ key: `return${d}`, label: `수익률 가정이 ${returnPct}%면`, months: run({ returnPct }) });
+    whatIf.push({ key: `return${d}`, label: `1년에 불어나는 비율이 ${returnPct}%면`, months: run({ returnPct }) });
   }
 
   const extra = Math.round(extraMonthly) !== 0 && inp.monthlySaving + extraMonthly >= 0

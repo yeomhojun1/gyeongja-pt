@@ -469,7 +469,25 @@ input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px;
 .ledger-need { font-size: 14px; color: var(--accent); white-space: nowrap; }
 
 /* 경제적 자유 숫자 */
+.freedom-guide {
+  list-style: none;
+  counter-reset: step;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.freedom-guide li { counter-increment: step; display: flex; gap: 12px; padding: 4px 0; }
+.freedom-guide li::before { content: counter(step); color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+
 .freedom-result { margin-top: 20px; }
+/* 왼쪽 이름(가정 등)이 한 글자씩 세로로 꺾이지 않게 하고, 긴 값은 오른쪽에서 줄을 바꾼다 */
+.freedom-result .result-details li span:first-child { flex-shrink: 0; }
 
 .freedom-bar {
   height: 8px;

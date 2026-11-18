@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#0a0a0a"/>
-  <rect x="116" y="166" width="280" height="196" rx="30" fill="none" stroke="#f0f4ff" stroke-width="22"/>
-  <path d="M116 222 H396" stroke="#f0f4ff" stroke-width="22"/>
-  <path d="M196 318 L246 276 L282 302 L340 246" fill="none" stroke="#3ecf8e" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 경자피티 앱 아이콘: 미색 종이 위 남색 잉크 통장 한 면. 원(₩) 표시와 통장 인자 줄(점선) 하나.
+       그림은 가운데 지름 80% 원 안에만 둬서 maskable(둥근·물방울 모양 자르기)에도 잘리지 않는다 -->
+  <rect width="512" height="512" fill="#f7f4ee"/>
+  <rect x="108" y="140" width="296" height="232" rx="28" fill="none" stroke="#24408e" stroke-width="24"/>
+  <path d="M176 184 L212 288 L256 204 L300 288 L336 184" fill="none" stroke="#24408e" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M164 228 H348" stroke="#24408e" stroke-width="16" stroke-linecap="round"/>
+  <path d="M168 332 H344" stroke="#1f1b16" stroke-width="12" stroke-dasharray="20 16" stroke-linecap="butt"/>
 </svg>

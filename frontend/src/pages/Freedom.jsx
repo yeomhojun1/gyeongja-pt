@@ -58,15 +58,17 @@ export default function Freedom() {
   return (
     <div className="freedom wallet">
       <h1 className="page-title">경제적 자유 숫자</h1>
-      <p className="page-desc">
-        일하지 않아도 생활비가 나오려면 얼마가 필요하고, 지금 속도로 언제 닿는지 셉니다. 모든 금액은 오늘 돈 가치 기준입니다.
-      </p>
+      <ol className="freedom-guide" aria-label="이 화면 사용법">
+        <li>한 달 생활비, 지금 모아 둔 돈, 한 달 저축 세 가지를 넣습니다.</li>
+        <li>일하지 않아도 생활비가 나오는 금액(경제적 자유 숫자)과 지금 속도로 거기 닿는 때를 알려 드립니다.</li>
+        <li>금액은 물가를 뺀 오늘 돈 가치로 셉니다. 넣은 숫자는 서버로 보내지 않습니다.</li>
+      </ol>
 
       <section className="wallet-section">
         <div className="calc-form">
           <Num id="f-expense" label="한 달 생활비" value={inp.monthlyExpense} onChange={setExpense} unit="원" note="일을 그만둔 뒤에도 쓸 돈(대출 상환 제외 권장)" />
           <Num id="f-assets" label="지금 모아 둔 돈" value={inp.assets} onChange={set('assets')} unit="원" note={from.assets ? FROM_NOTE[from.assets] : '예금·적금·투자금 합계(빚은 빼고)'} />
-          <Num id="f-saving" label="한 달 저축" value={inp.monthlySaving} onChange={setSaving} unit="원" note={autoSaving && inp.monthlySaving !== null ? FROM_NOTE.income : undefined} />
+          <Num id="f-saving" label="한 달 저축" value={inp.monthlySaving} onChange={setSaving} unit="원" note={autoSaving && inp.monthlySaving !== null ? FROM_NOTE.income : '매달 새로 모으는 돈(적금·투자 넣는 돈 포함)'} />
         </div>
       </section>
 
@@ -78,7 +80,7 @@ export default function Freedom() {
           <section className="ledger-summary freedom-result" aria-label="계산 결과">
             <div className="result-label">내 경제적 자유 숫자</div>
             <div className="result-amount gain">{eokText(r.target)}</div>
-            <div className="result-sub">1년 생활비 {eokText(inp.monthlyExpense * 12)} ÷ 인출률 {inp.withdrawPct}%</div>
+            <div className="result-sub">해마다 {inp.withdrawPct}%씩 꺼내 써도 1년 생활비 {eokText(inp.monthlyExpense * 12)}이 나오는 금액</div>
 
             <div className="freedom-bar" role="progressbar" aria-valuenow={Math.round(r.progress * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="목표 대비 지금">
               <span style={{ width: `${r.progress * 100}%` }} />
@@ -91,8 +93,8 @@ export default function Freedom() {
               {r.months > 0 && <>지금 속도면 <strong>{periodText(r.months)}</strong> 뒤 ({reachMonth(r.months)})</>}
             </div>
             <ul className="result-details">
-              <li><span>지금 일을 멈추면</span><span>생활비 {Math.floor(r.runwayMonths)}개월치</span></li>
-              <li><span>가정</span><span>실질 수익률 {inp.returnPct}% · 인출률 {inp.withdrawPct}% (아래에서 바꾸기)</span></li>
+              <li><span>지금 일을 멈추면(불어나는 돈 없이)</span><span>생활비 {Math.floor(r.runwayMonths)}개월치</span></li>
+              <li><span>가정</span><span>해마다 {inp.returnPct}% 불어남 · {inp.withdrawPct}% 꺼내 씀 (아래에서 바꾸기)</span></li>
             </ul>
           </section>
 
@@ -131,10 +133,10 @@ export default function Freedom() {
       )}
 
       <section className="wallet-section">
-        <h2>가정</h2>
+        <h2>계산에 쓰는 가정</h2>
         <div className="calc-form">
-          <Num id="f-return" label="실질 수익률(연)" value={inp.returnPct} onChange={set('returnPct')} unit="%" decimals={1} note="물가 상승을 뺀 수익률 가정입니다. 특정 상품의 수익률이 아닙니다." />
-          <Num id="f-withdraw" label="인출률(연)" value={inp.withdrawPct} onChange={set('withdrawPct')} unit="%" decimals={1} note="모은 돈에서 해마다 꺼내 쓰는 비율. 4%는 미국 과거 자료에서 나온 경험 규칙이고, 앞으로도 맞는다는 보장은 없습니다." />
+          <Num id="f-return" label="1년에 불어나는 비율(실질 수익률)" value={inp.returnPct} onChange={set('returnPct')} unit="%" decimals={1} note="모은 돈이 1년에 늘어나는 비율에서 물가 오른 만큼을 뺀 값입니다. 5% 벌고 물가가 3% 오르면 2%입니다. 특정 상품의 수익률이 아닙니다." />
+          <Num id="f-withdraw" label="1년에 꺼내 쓰는 비율(인출률)" value={inp.withdrawPct} onChange={set('withdrawPct')} unit="%" decimals={1} note="모은 돈에서 해마다 생활비로 꺼내 쓰는 몫입니다. 4%면 5억 원에서 1년에 2,000만 원을 씁니다. 4%는 미국 과거 자료에서 나온 경험 규칙이고, 앞으로도 맞는다는 보장은 없습니다." />
         </div>
       </section>
 
@@ -144,10 +146,10 @@ export default function Freedom() {
       {msg && <p className="save-msg" role="status">{msg}</p>}
 
       <ul className="calc-notes">
-        <li>매달 말에 저축하고 월 복리로 불어난다고 보고 계산합니다. 세금·수수료·국민연금은 넣지 않았습니다.</li>
+        <li>매달 말에 저축하고, 불어난 돈에 다시 수익이 붙는다(월 복리)고 보고 계산합니다. 세금·수수료·국민연금은 넣지 않았습니다.</li>
         <li>실제 수익률은 해마다 오르내리고, 손실이 날 수도 있습니다. 결과는 계획을 세우기 위한 참고값입니다.</li>
       </ul>
-      <p className="disclaimer">투자·금융 상품 권유가 아닙니다. 수익률·인출률은 가정이며 사용자가 직접 바꿀 수 있습니다.</p>
+      <p className="disclaimer">투자·금융 상품 권유가 아닙니다. 불어나는 비율과 꺼내 쓰는 비율은 가정이며 직접 바꿀 수 있습니다.</p>
     </div>
   );
 }
