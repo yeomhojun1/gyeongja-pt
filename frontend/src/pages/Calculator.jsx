@@ -21,13 +21,13 @@ export default function Calculator() {
 
   const months = Math.round(years * 12);
   const input = { principal, ratePct, months, method };
-  const error = Number.isFinite(years) ? validateLoan(input) : '남은 기간을 숫자로 입력해주세요.';
+  const error = Number.isFinite(years) ? validateLoan(input) : '남은 기간을 숫자로 입력해 주십시오.';
   const rows = error ? [] : compareRates(input);
 
   return (
     <div>
       <h1 className="page-title">대출 계산기</h1>
-      <p className="page-desc">금리가 0.25·0.5·1%p 오르거나 내리면 내 대출 납입액과 이자가 얼마나 바뀌는지 봅니다.{loan && ' 내 지갑에 저장한 대출로 시작했어요.'}</p>
+      <p className="page-desc">금리가 0.25·0.5·1%p 오르거나 내리면 내 대출 납입액과 이자가 얼마나 바뀌는지 봅니다.{loan && ' 내 지갑에 저장한 대출로 시작했습니다.'}</p>
 
       <div className="calc-form">
         <div className="form-group">

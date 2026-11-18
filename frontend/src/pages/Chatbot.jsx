@@ -4,7 +4,7 @@ import { DEMO_QA } from '../demo/answers';
 
 const GREETING = {
   role: 'assistant',
-  content: '안녕하세요! 경자피티입니다.\n경제 용어나 뉴스에서 본 현상을 물어보시면 ① 한 줄 요약 ② 쉬운 설명 ③ 내 지갑 영향 ④ 출처 순서로 답해 드려요.\n특정 종목·코인·부동산을 사고팔지는 답하지 않습니다.',
+  content: '안녕하십니까. 경자피티입니다.\n경제 용어나 뉴스에서 본 현상을 물어보시면 ① 한 줄 요약 ② 쉬운 설명 ③ 내 지갑 영향 ④ 출처 순서로 답해 드립니다.\n특정 종목·코인·부동산을 사고팔지는 답하지 않습니다.',
   local: true,
   demoExamples: NO_AI
 };
@@ -95,7 +95,7 @@ export default function Chatbot() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="경제에 관해 질문하세요 (Enter 전송)"
+          placeholder="경제에 관해 질문하십시오 (Enter 전송)"
           aria-label="질문 입력"
           rows={1}
         />

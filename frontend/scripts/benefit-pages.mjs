@@ -99,33 +99,41 @@ export function conditionRows(codes) {
 }
 
 const CSS = `*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0a0a;--surface:#141414;--border:#2a2a2a;--text:#f5f5f5;--muted:#9a9a9a;--accent:#3ecf8e}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+:root{--bg:#f7f4ee;--surface:#fdfbf7;--surface2:#efe9df;--line:rgba(31,27,22,.1);--line2:rgba(31,27,22,.2);--text:#1f1b16;--text2:#5e554a;--muted:#6f675c;--accent:#24408e}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
 a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 48px}
-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);margin-bottom:20px}
-header .logo{color:var(--text);font-weight:700;text-decoration:none}
-header nav a{color:var(--muted);text-decoration:none;font-size:.85rem;margin-left:14px}
-.crumb{font-size:.8rem;color:var(--muted);margin-bottom:8px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px;border-bottom:1px solid var(--line);margin-bottom:24px}
+header .logo{color:var(--text);font-size:17px;font-weight:600;text-decoration:none;white-space:nowrap}
+header nav{display:flex;gap:16px}
+header nav a{color:var(--text2);text-decoration:none;font-size:14px;white-space:nowrap}
+header nav a:hover{color:var(--text)}
+.crumb{font-size:13px;color:var(--muted);margin-bottom:8px}
 .crumb a{color:var(--muted)}
-h1{font-size:1.45rem;line-height:1.4;margin-bottom:8px;word-break:keep-all}
-.meta{color:var(--muted);font-size:.85rem;margin-bottom:18px}
-h2{font-size:1rem;margin:26px 0 8px;color:var(--accent)}
-section p{font-size:.93rem;margin-bottom:4px;word-break:keep-all;overflow-wrap:anywhere}
-dl.conds{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;font-size:.9rem}
-dl.conds dt{color:var(--muted)}
-.cta{margin:28px 0;padding:16px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
-.cta p{font-size:.9rem;margin-bottom:10px}
-.btn{display:inline-block;background:var(--accent);color:#06140d;font-weight:700;text-decoration:none;padding:10px 16px;border-radius:8px;font-size:.92rem}
-.btn2{display:inline-block;margin-top:10px;font-size:.88rem}
-ul.list{list-style:none}
-ul.list li{padding:12px 0;border-bottom:1px solid var(--border)}
-ul.list li a{font-weight:600;text-decoration:none;word-break:keep-all}
-ul.list li span{display:block;color:var(--muted);font-size:.82rem}
+h1{font-size:28px;line-height:1.3;font-weight:600;margin-bottom:8px}
+.meta{color:var(--text2);font-size:14px;margin-bottom:20px}
+h2{font-size:18px;font-weight:600;margin:32px 0 8px}
+section p{margin-bottom:4px}
+dl.conds{display:grid;grid-template-columns:max-content 1fr;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 20px;font-size:15px}
+dl.conds dt,dl.conds dd{padding:8px 0}
+dl.conds dt{color:var(--text2);padding-right:16px}
+dl.conds dt:not(:first-of-type),dl.conds dt:not(:first-of-type)+dd{border-top:1px dashed var(--line2)}
+.cta{margin:32px 0;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.cta p{font-size:15px;color:var(--text2);margin-bottom:12px}
+.btn{display:inline-flex;align-items:center;min-height:44px;background:var(--text);color:var(--surface);font-weight:500;text-decoration:none;padding:0 20px;border-radius:8px;font-size:15px}
+.btn:hover{background:#3a332b}
+.btn2{display:inline-block;margin-top:12px;font-size:15px}
+ul.list{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+ul.list li{padding:12px 20px}
+ul.list li+li{border-top:1px solid var(--line)}
+ul.list li a{font-weight:500;text-decoration:none}
+ul.list li span{display:block;color:var(--text2);font-size:14px}
 ul.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
-ul.chips a{display:inline-block;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:.86rem;color:var(--text);text-decoration:none}
-footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:.78rem}
-footer p{margin-bottom:6px}`;
+ul.chips a{display:inline-block;background:var(--surface);border:1px solid var(--line2);border-radius:6px;padding:6px 12px;font-size:14px;color:var(--text);text-decoration:none}
+ul.chips a:hover{background:var(--surface2)}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer p{margin-bottom:8px}`;
 
 function layout({ title, description, path, body, jsonLd, syncedAt, source }) {
   const url = SITE_URL + path;
@@ -143,7 +151,8 @@ function layout({ title, description, path, body, jsonLd, syncedAt, source }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(url)}">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#f7f4ee">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="icon" type="image/svg+xml" href="/icon.svg">
 <style>${CSS}</style>
 ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}</script>` : ''}
@@ -156,7 +165,7 @@ ${body}
 </main>
 <footer>
 <p>자료: ${esc(source)}. 받아 온 날 ${esc(String(syncedAt).slice(0, 10))}.</p>
-<p>정부24에 올라온 내용을 옮긴 것입니다. 실제로 받을 수 있는지는 소득·재산·거주지 등 세부 기준에 따라 달라지니 신청 전에 기관 안내에서 꼭 확인하세요.</p>
+<p>정부24에 올라온 내용을 옮긴 것입니다. 실제로 받을 수 있는지는 소득·재산·거주지 등 세부 기준에 따라 달라지니 신청 전에 기관 안내에서 꼭 확인하십시오.</p>
 </footer>
 </div>
 </body>
@@ -164,7 +173,7 @@ ${body}
 `;
 }
 
-const cta = (lead = '') => `<div class="cta"><p>${lead}사는 곳·나이·상황만 고르면 정부24 혜택 1만여 개 중에서 골라 드려요. 가입 없이, 고른 조건은 서버로 보내지 않아요.</p><a class="btn" href="/benefits">내 조건으로 받을 돈 찾기</a></div>`;
+const cta = (lead = '') => `<div class="cta"><p>${lead}사는 곳·나이·상황만 고르면 정부24 혜택 1만여 개 중에서 골라 드립니다. 가입 없이 쓸 수 있고, 고른 조건은 서버로 보내지 않습니다.</p><a class="btn" href="/benefits">내 조건으로 받을 돈 찾기</a></div>`;
 
 const listItems = (items) => `<ul class="list">${items.map((s) => `<li><a href="${servicePath(s.id)}">${esc(s.name)}</a><span>${esc([s.org, s.type].filter(Boolean).join(' · '))}${s.summary ? ` — ${esc(oneLine(s.summary, 70))}` : ''}</span></li>`).join('')}</ul>`;
 
@@ -201,7 +210,7 @@ ${purpose ? `<section>${paragraphs(purpose)}</section>` : ''}
 ${rows.length ? `<h2>정부24 지원조건</h2><dl class="conds">${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : ''}
 ${sections}
 ${s.url ? `<p><a class="btn2" href="${esc(s.url)}" rel="noopener" target="_blank">정부24에서 원문 보기·신청하기 ↗</a></p>` : ''}
-${cta('이 혜택 말고도 나한테 맞는 게 더 있을 수 있어요. ')}
+${cta('이 혜택 말고도 나한테 맞는 게 더 있을 수 있습니다. ')}
 ${related.length ? `<h2>함께 많이 보는 혜택</h2>${listItems(related)}` : ''}`;
 
   return layout({

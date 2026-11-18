@@ -52,7 +52,7 @@ export default function Freedom() {
   const saved = KEYS.every((k) => (profile[k] ?? null) === inp[k]);
   const save = () => {
     const ok = saveProfile({ ...profile, ...inp });
-    setMsg(ok ? '내 지갑에 저장했어요. 다음에 오면 이 숫자로 시작합니다.' : '브라우저가 저장을 막았어요(사생활 보호 모드 등). 이 화면을 닫으면 사라집니다.');
+    setMsg(ok ? '내 지갑에 저장했습니다. 다음에 오면 이 숫자로 시작합니다.' : '브라우저가 저장을 막았습니다(사생활 보호 모드 등). 이 화면을 닫으면 사라집니다.');
   };
 
   return (
@@ -86,8 +86,8 @@ export default function Freedom() {
             <div className="result-sub">지금 {Math.floor(r.progress * 1000) / 10}% (모아 둔 돈 {eokText(inp.assets)})</div>
 
             <div className="freedom-when">
-              {r.months === 0 && <>이미 목표를 넘었어요</>}
-              {r.months === null && <>지금 속도로는 100년 넘게 걸려요</>}
+              {r.months === 0 && <>이미 목표를 넘었습니다</>}
+              {r.months === null && <>지금 속도로는 100년 넘게 걸립니다</>}
               {r.months > 0 && <>지금 속도면 <strong>{periodText(r.months)}</strong> 뒤 ({reachMonth(r.months)})</>}
             </div>
             <ul className="result-details">

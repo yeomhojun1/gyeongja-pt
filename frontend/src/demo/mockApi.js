@@ -9,7 +9,7 @@ import { checkInvestAdvice, INVEST_REFUSAL } from '../../../shared/investFilter.
 const DELAY_MS = 600;
 const NEWS_DEMO =
   '지금은 뉴스 해설이 동작하지 않습니다. 기사마다 내용이 달라 미리 답을 써 둘 수 없기 때문입니다.\n' +
-  '홈 화면의 "오늘의 이슈"에서 미리 정리한 이슈 해설을 보거나, "경제 챗봇"의 예시 질문을 눌러 보세요.';
+  '홈 화면의 "오늘의 이슈"에서 미리 정리한 이슈 해설을 보거나, "경제 챗봇"의 예시 질문을 눌러 보십시오.';
 
 const json = (body, status = 200) =>
   new Promise(resolve =>

@@ -167,12 +167,12 @@ export function validateInputs(template, inp) {
     const v = inp[f.key];
     if (f.checklist) continue;
     if (f.options) {
-      if (!f.options[v]) return `${josa(f.label, '을', '를')} 골라주세요.`;
+      if (!f.options[v]) return `${josa(f.label, '을', '를')} 골라 주십시오.`;
       continue;
     }
-    if (typeof v !== 'number' || !Number.isFinite(v)) return `${josa(f.label, '을', '를')} 숫자로 입력해주세요.`;
-    if (v < f.min || v > f.max) return `${josa(f.label, '은', '는')} ${f.min.toLocaleString('ko-KR')}~${f.max.toLocaleString('ko-KR')}${f.unit} 사이로 입력해주세요.`;
-    if (f.integer && !Number.isInteger(v)) return `${josa(f.label, '은', '는')} 정수로 입력해주세요.`;
+    if (typeof v !== 'number' || !Number.isFinite(v)) return `${josa(f.label, '을', '를')} 숫자로 입력해 주십시오.`;
+    if (v < f.min || v > f.max) return `${josa(f.label, '은', '는')} ${f.min.toLocaleString('ko-KR')}~${f.max.toLocaleString('ko-KR')}${f.unit} 사이로 입력해 주십시오.`;
+    if (f.integer && !Number.isInteger(v)) return `${josa(f.label, '은', '는')} 정수로 입력해 주십시오.`;
   }
   return null;
 }

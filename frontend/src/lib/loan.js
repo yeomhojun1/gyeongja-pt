@@ -12,11 +12,11 @@ export const RATE_DELTAS = [-1, -0.5, -0.25, 0, 0.25, 0.5, 1];
 
 /** 입력 검증. 문제가 있으면 한국어 메시지, 없으면 null */
 export function validateLoan({ principal, ratePct, months, method }) {
-  if (!Number.isFinite(principal) || principal <= 0) return '대출 잔액을 0보다 큰 숫자로 입력해주세요.';
-  if (principal > 100_000_000_000) return '대출 잔액이 너무 큽니다. 1,000억 원 이하로 입력해주세요.';
-  if (!Number.isFinite(ratePct) || ratePct < 0 || ratePct > 30) return '금리는 0~30% 사이로 입력해주세요.';
-  if (!Number.isInteger(months) || months < 1 || months > 600) return '남은 기간은 1~600개월 사이의 정수로 입력해주세요.';
-  if (!METHODS[method]) return '상환 방식을 골라주세요.';
+  if (!Number.isFinite(principal) || principal <= 0) return '대출 잔액을 0보다 큰 숫자로 입력해 주십시오.';
+  if (principal > 100_000_000_000) return '대출 잔액이 너무 큽니다. 1,000억 원 이하로 입력해 주십시오.';
+  if (!Number.isFinite(ratePct) || ratePct < 0 || ratePct > 30) return '금리는 0~30% 사이로 입력해 주십시오.';
+  if (!Number.isInteger(months) || months < 1 || months > 600) return '남은 기간은 1~600개월 사이의 정수로 입력해 주십시오.';
+  if (!METHODS[method]) return '상환 방식을 골라 주십시오.';
   return null;
 }
 

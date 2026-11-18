@@ -55,10 +55,10 @@ test('장부 영향을 저축에 더해 보기: 손해면 늦어지고, 저축�
 
 test('입력 검사', () => {
   assert.equal(validateFreedom(base), null);
-  assert.equal(validateFreedom({ ...base, monthlyExpense: NaN }), '한 달 생활비를 숫자로 입력해주세요.');
-  assert.equal(validateFreedom({ ...base, monthlyExpense: 0 }), '한 달 생활비는 1~1,000,000,000원 사이로 입력해주세요.');
-  assert.equal(validateFreedom({ ...base, withdrawPct: 0.5 }), '인출률 가정은 1~10% 사이로 입력해주세요.');
-  assert.equal(validateFreedom({ ...base, assets: -1 }), '지금 모아 둔 돈은 0~10,000,000,000,000원 사이로 입력해주세요.');
+  assert.equal(validateFreedom({ ...base, monthlyExpense: NaN }), '한 달 생활비를 숫자로 입력해 주십시오.');
+  assert.equal(validateFreedom({ ...base, monthlyExpense: 0 }), '한 달 생활비는 1~1,000,000,000원 사이로 입력해 주십시오.');
+  assert.equal(validateFreedom({ ...base, withdrawPct: 0.5 }), '인출률 가정은 1~10% 사이로 입력해 주십시오.');
+  assert.equal(validateFreedom({ ...base, assets: -1 }), '지금 모아 둔 돈은 0~10,000,000,000,000원 사이로 입력해 주십시오.');
 });
 
 test('글자: 기간·차이·도달 달·억 단위', () => {

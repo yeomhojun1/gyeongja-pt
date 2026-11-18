@@ -22,7 +22,7 @@ const VAR_UNITS = { unitPrice: '원', perUnitChange: '원', changePct: '%', pass
 
 const PERIOD_TEXT = { month: '매달', year: '매년', once: '한 번' };
 
-// 이슈 페이지 첫 화면의 계산기. 영상에서 가져온 값(vars)은 이미 들어가 있고, 시청자는 내 숫자만 바꾼다.
+// 이슈 페이지 첫 화면의 계산기. 뉴스 속 숫자(vars)은 이미 들어가 있고, 시청자는 내 숫자만 바꾼다.
 // 내 지갑 프로필이 있으면 내 숫자도 미리 채우고, 없으면 지금 넣은 숫자를 프로필에 저장할 수 있게 한다.
 export default function IssueCalculator({ calculator, profile, onSaveProfile }) {
   const { template, vars, varSources = {}, inputs: defaults = {}, inputNotes = {}, notes = [], resultLabel } = calculator;
@@ -98,14 +98,14 @@ export default function IssueCalculator({ calculator, profile, onSaveProfile }) 
         })}
         {usingProfile && (
           <div className="profile-bar">
-            {saved ? '내 지갑에 저장했어요. 다음 이슈부터 자동으로 들어갑니다.' : '내 지갑 숫자로 계산했어요.'}
+            {saved ? '내 지갑에 저장했습니다. 다음 이슈부터 자동으로 들어갑니다.' : '내 지갑 숫자로 계산했습니다.'}
             <Link to="/me">내 지갑 고치기</Link>
           </div>
         )}
         {nextProfile && (
           <div className="profile-bar">
             <button type="button" className="profile-save" onClick={save}>이 숫자를 내 지갑에 저장</button>
-            <span>다음 이슈부터 자동으로 들어갑니다. 이 기기에만 저장돼요.</span>
+            <span>다음 이슈부터 자동으로 들어갑니다. 이 기기에만 저장됩니다.</span>
           </div>
         )}
       </div>

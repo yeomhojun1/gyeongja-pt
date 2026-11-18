@@ -51,6 +51,6 @@ export function rateLimit({ limit, windowMs = 60_000, now } = {}) {
     const r = limiter.check(req.ip || req.socket?.remoteAddress || 'unknown');
     if (r.allowed) return next();
     res.set('Retry-After', String(r.retryAfterSec));
-    res.status(429).json({ error: `요청이 너무 많습니다. ${r.retryAfterSec}초 후에 다시 시도해주세요.` });
+    res.status(429).json({ error: `요청이 너무 많습니다. ${r.retryAfterSec}초 후에 다시 시도해 주십시오.` });
   };
 }

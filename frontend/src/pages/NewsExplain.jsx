@@ -40,7 +40,7 @@ export default function NewsExplain() {
           id="news-text"
           value={newsText}
           onChange={e => setNewsText(e.target.value)}
-          placeholder="기사 내용을 복사해서 여기에 붙여넣으세요... (최대 8,000자)"
+          placeholder="기사 내용을 복사해서 여기에 붙여넣으십시오... (최대 8,000자)"
           maxLength={8000}
         />
       </div>

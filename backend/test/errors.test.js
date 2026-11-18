@@ -11,7 +11,7 @@ test('mapLlmError: 키 없음·잘못된 키·권한 없음은 503 + 한국어 �
   const noKey = Object.assign(new Error('GEMINI_API_KEY missing'), { noKey: true });
   const r = mapLlmError(noKey, false);
   assert.equal(r.status, 503);
-  assert.equal(r.error, 'AI 기능이 설정되지 않았습니다. 관리자에게 문의하세요.');
+  assert.equal(r.error, 'AI 기능이 설정되지 않았습니다. 관리자에게 문의하십시오.');
   assert.doesNotMatch(r.error, /GEMINI_API_KEY|api key/i);
 
   // 키가 있어도 Gemini 가 키를 거부하면(400 INVALID_ARGUMENT "API key not valid") 같은 처리
@@ -56,7 +56,7 @@ test('mapLlmError: 모든 메시지가 한국어이며 원문 문자열을 포�
 
 test('mapBodyError: 과대 본문 413, 잘못된 JSON 400, 그 외는 null (버그 6)', () => {
   assert.deepEqual(mapBodyError({ type: 'entity.too.large' }), {
-    status: 413, error: '요청 본문이 너무 큽니다. 내용을 줄여서 다시 시도해주세요.'
+    status: 413, error: '요청 본문이 너무 큽니다. 내용을 줄여서 다시 시도해 주십시오.'
   });
   assert.equal(mapBodyError({ type: 'entity.parse.failed' }).status, 400);
   assert.equal(mapBodyError(new SyntaxError('Unexpected token b in JSON')).status, 400);

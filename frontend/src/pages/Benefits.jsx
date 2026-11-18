@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import NumberInput from '../components/NumberInput';
 import { DEMO } from '../config';
 import { useProfile } from '../lib/useProfile';
@@ -7,7 +7,7 @@ import { GROUPS, findBenefits, isEmptyBenefitProfile, readSnapshot, sanitizeBene
 // 받을 수 있는 돈 찾기: 정부24 공공서비스 지원조건과 내 조건을 이 기기 안에서 맞춘다(lib/benefits.js).
 // 혜택 데이터는 빌드 때 넣은 정적 파일(public/benefits.json, scripts/sync-benefits.mjs 로 생성)을 읽는다.
 const PAGE = 20;
-const TABS = { match: '조건이 맞아요', check: '확인이 더 필요해요' };
+const TABS = { match: '조건 맞음', check: '확인 필요' };
 const LABEL = Object.fromEntries(GROUPS.flatMap((g) => Object.entries(g.codes)));
 // 혜택별 설명 페이지(/benefit/…)는 배포 빌드 뒤에 만들어진다(scripts/benefit-pages.mjs). 개발 서버·데모엔 없다
 const PAGES = import.meta.env.PROD && !DEMO;
@@ -15,7 +15,7 @@ const PAGES = import.meta.env.PROD && !DEMO;
 /** 접힌 조건 칸에 보여 줄 한 줄 요약 */
 function summaryText(me) {
   const parts = [[me.sido, me.sigungu].filter(Boolean).join(' '), me.birthYear !== null && `${me.birthYear}년생`, ...me.codes.map((c) => LABEL[c])];
-  return parts.filter(Boolean).join(' · ') || '아직 고른 조건이 없어요';
+  return parts.filter(Boolean).join(' · ') || '아직 고른 조건이 없습니다';
 }
 
 function useBenefitData() {
@@ -89,6 +89,14 @@ export default function Benefits() {
   const [tab, setTab] = useState('match');
   const [shown, setShown] = useState(PAGE);
   const [msg, setMsg] = useState('');
+  const condsRef = useRef(null);
+  const resultsRef = useRef(null);
+  // 조건을 다 고르면 조건 칸을 접고 결과로 바로 내려간다
+  const showResults = () => {
+    if (result) { setTab(result.match.length > 0 ? 'match' : 'check'); setShown(PAGE); }
+    if (condsRef.current) condsRef.current.open = false;
+    requestAnimationFrame(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  };
   const change = (next) => { setMe(sanitizeBenefitProfile(next)); setShown(PAGE); setMsg(''); };
 
   // 서비스가 1만 개가 넘어 조건이 바뀔 때만 다시 맞춘다
@@ -97,7 +105,7 @@ export default function Benefits() {
   const saved = JSON.stringify(sanitizeBenefitProfile(me)) === JSON.stringify(profile.benefit);
   const save = () => {
     const ok = saveProfile({ ...profile, benefit: me });
-    setMsg(ok ? '내 지갑에 저장했어요. 다음에 오면 이 조건으로 찾습니다.' : '브라우저가 저장을 막았어요(사생활 보호 모드 등). 이 화면을 닫으면 사라집니다.');
+    setMsg(ok ? '내 지갑에 저장했습니다. 다음에 오면 이 조건으로 찾습니다.' : '브라우저가 저장을 막았습니다(사생활 보호 모드 등). 이 화면을 닫으면 사라집니다.');
   };
 
   return (
@@ -108,7 +116,7 @@ export default function Benefits() {
       </p>
 
       {/* 저장한 조건이 있으면 접어서 결과가 먼저 보이게 한다 */}
-      <details className="wallet-section benefit-conds" open={isEmptyBenefitProfile(profile.benefit)}>
+      <details ref={condsRef} className="wallet-section benefit-conds" open={isEmptyBenefitProfile(profile.benefit)}>
         <summary>
           <span className="benefit-conds-title">내 조건</span>
           <span className="benefit-conds-sum">{summaryText(me)}</span>
@@ -139,16 +147,19 @@ export default function Benefits() {
         </div>
         {GROUPS.map((g) => <GroupChips key={g.key} group={g} me={me} onChange={change} />)}
         <p className="input-note">고르지 않은 묶음은 "확인 필요"로 보여 줍니다. 여러 개 고르는 묶음에서 고르지 않은 항목은 해당하지 않는 것으로 봅니다.</p>
-        <div className="wallet-actions">
-          <button type="button" className="submit-btn" onClick={save} disabled={saved}>{saved ? '내 지갑에 저장됨' : '내 지갑에 저장'}</button>
+        <div className="save-bar">
+          <button type="button" className="submit-btn" onClick={showResults} disabled={!result}>
+            {!result ? '혜택 목록 불러오는 중' : result.match.length > 0 ? `맞는 혜택 ${result.match.length.toLocaleString('ko-KR')}개 보기` : `혜택 ${result.check.length.toLocaleString('ko-KR')}개 둘러보기`}
+          </button>
+          <button type="button" className="ghost-btn" onClick={save} disabled={saved}>{saved ? '조건 저장됨' : '조건 저장'}</button>
         </div>
       </details>
       {msg && <p className="save-msg" role="status">{msg}</p>}
 
-      <section className="issue-section" aria-live="polite">
+      <section ref={resultsRef} className="issue-section benefit-results" aria-live="polite">
         {data.status === 'loading' && <p className="muted">혜택 목록을 불러오는 중…</p>}
         {data.status === 'missing' && (
-          <p className="muted">혜택 목록이 아직 준비되지 않았어요. (운영자: 공공데이터포털 인증키로 <code>npm run sync:benefits</code> 를 실행해 주세요)</p>
+          <p className="muted">혜택 목록이 아직 준비되지 않았습니다. (운영자: 공공데이터포털 인증키로 <code>npm run sync:benefits</code> 를 실행해 주십시오)</p>
         )}
         {result && (
           <>
@@ -160,7 +171,7 @@ export default function Benefits() {
                 </button>
               ))}
             </div>
-            {list.length === 0 && <p className="muted">{tab === 'match' ? '지금 넣은 조건으로 모두 맞는 서비스가 없어요. 조건을 더 넣거나 "확인이 더 필요해요"를 보세요.' : '확인이 더 필요한 서비스가 없어요.'}</p>}
+            {list.length === 0 && <p className="muted">{tab === 'match' ? '지금 넣은 조건으로 모두 맞는 서비스가 없습니다. 조건을 더 넣거나 "확인 필요" 목록을 보십시오.' : '확인이 더 필요한 서비스가 없습니다.'}</p>}
             <ul className="benefit-list">{list.slice(0, shown).map((item) => <Card key={item.service.id} item={item} />)}</ul>
             {list.length > shown && (
               <button type="button" className="ghost-btn benefit-more" onClick={() => setShown(shown + PAGE)}>
@@ -176,7 +187,7 @@ export default function Benefits() {
       </section>
 
       <p className="disclaimer">
-        정부24의 지원조건 코드(성별·나이·소득 구간·가구 상황 등)만 맞춘 결과입니다. 실제로 받을 수 있는지는 소득·재산 기준, 거주지 등 세부 조건에 따라 달라지니 기관 안내에서 꼭 확인하세요.
+        정부24의 지원조건 코드(성별·나이·소득 구간·가구 상황 등)만 맞춘 결과입니다. 실제로 받을 수 있는지는 소득·재산 기준, 거주지 등 세부 조건에 따라 달라지니 기관 안내에서 꼭 확인하십시오.
       </p>
     </div>
   );

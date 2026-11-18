@@ -33,7 +33,7 @@ export default function Ledger() {
         <h1 className="page-title">내 지갑 장부</h1>
         <p className="page-desc">이슈가 올라올 때마다 내 지갑에 생기는 변화를 한 줄씩 모아 보여 줍니다.</p>
         <Link to="/me" className="wallet-card">
-          <strong>먼저 내 숫자를 넣어 주세요</strong>
+          <strong>먼저 내 숫자를 넣어 주십시오</strong>
           <span>대출·월급·한 달 지출을 넣으면 지금까지 올라온 이슈가 내 숫자로 계산돼 여기에 쌓입니다. 이 기기에만 저장됩니다.</span>
         </Link>
       </div>
@@ -47,7 +47,7 @@ export default function Ledger() {
     <div className="ledger">
       <h1 className="page-title">내 지갑 장부</h1>
       <p className="page-desc">
-        올라온 이슈를 내 지갑 숫자로 계산해 모았어요. <Link to="/me">내 숫자 고치기</Link>
+        올라온 이슈를 내 지갑 숫자로 계산해 모았습니다. <Link to="/me">내 숫자 고치기</Link>
       </p>
 
       {latest ? (
@@ -59,7 +59,7 @@ export default function Ledger() {
           {Math.round(latest.totals.once) !== 0 && <div className="result-sub">한 번 {signedWon(latest.totals.once)}</div>}
         </section>
       ) : (
-        <p className="muted">아직 내 숫자로 계산된 이슈가 없어요. 아래에서 필요한 숫자를 확인해 보세요.</p>
+        <p className="muted">아직 내 숫자로 계산된 이슈가 없습니다. 아래에서 필요한 숫자를 확인해 보십시오.</p>
       )}
 
       {months.map((m) => (
@@ -72,7 +72,7 @@ export default function Ledger() {
       {scenarios.length > 0 && (
         <section className="issue-section">
           <h2>가정 계산</h2>
-          <p className="muted">실제로 바뀐 게 아니라 "이렇게 된다면"을 계산한 이슈라서 합계에 넣지 않았어요.</p>
+          <p className="muted">실제로 바뀐 게 아니라 "이렇게 된다면"을 계산한 이슈라서 합계에 넣지 않았습니다.</p>
           <ul className="ledger-list">{scenarios.map((e) => <Row key={e.issue.id} e={e} />)}</ul>
         </section>
       )}

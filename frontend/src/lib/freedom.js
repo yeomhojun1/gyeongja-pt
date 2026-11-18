@@ -30,8 +30,8 @@ const UNITS = { monthlyExpense: '원', assets: '원', monthlySaving: '원', retu
 export function validateFreedom(inp) {
   for (const [k, r] of Object.entries(FREEDOM_RANGES)) {
     const v = inp[k];
-    if (typeof v !== 'number' || !Number.isFinite(v)) return `${josa(LABELS[k], '을', '를')} 숫자로 입력해주세요.`;
-    if (v < r.min || v > r.max) return `${josa(LABELS[k], '은', '는')} ${r.min.toLocaleString('ko-KR')}~${r.max.toLocaleString('ko-KR')}${UNITS[k]} 사이로 입력해주세요.`;
+    if (typeof v !== 'number' || !Number.isFinite(v)) return `${josa(LABELS[k], '을', '를')} 숫자로 입력해 주십시오.`;
+    if (v < r.min || v > r.max) return `${josa(LABELS[k], '은', '는')} ${r.min.toLocaleString('ko-KR')}~${r.max.toLocaleString('ko-KR')}${UNITS[k]} 사이로 입력해 주십시오.`;
   }
   return null;
 }
